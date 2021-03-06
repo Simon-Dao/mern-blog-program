@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const getDate = require('../markdown-blog/utils')
+const Article = require('./models/article')
 const articleRouter = require('./routes/articles')
 const dataRouter = require('./api/data')
 const app = express()
@@ -12,20 +13,8 @@ app.set('view engine','ejs')
 
 app.use(express.urlencoded({ extended: false }))
 
-app.get('/', (req,res) => {
-    const articles = [
-        {
-            title:'Title Article',
-            createdAt: getDate(),
-            description:'Test Description'
-        },
-        {
-            title:'Title Article 2',
-            createdAt: getDate(),
-            description:'Test Description 2'
-        }
-    ]
-    
+app.get('/', async (req,res) => {
+    const articles = await Article.find()
     res.render('articles/index', {articles: articles})
 })
 
