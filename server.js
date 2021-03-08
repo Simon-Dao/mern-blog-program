@@ -4,14 +4,16 @@ const getDate = require('../markdown-blog/utils')
 const Article = require('./models/article')
 const articleRouter = require('./routes/articles')
 const dataRouter = require('./api/data')
+const methodOverride = require('method-override')
 const app = express()
 const PORT = 5000
 
-mongoose.connect('mongodb://localhost/blog',{ useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost/blog',{ useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
 
 app.set('view engine','ejs')
 
 app.use(express.urlencoded({ extended: false }))
+app.use(methodOverride('_method'))
 
 app.get('/', async (req,res) => {
     const articles = await Article.find()
