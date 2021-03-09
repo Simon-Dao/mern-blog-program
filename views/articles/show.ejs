@@ -22,7 +22,7 @@
         <a href="/articles/edit" class='btn btn-info'>Edit</a>
 
         <div class='mb-2'>
-            <%= article.markdown%>
+            <%- article.sanitizedHTML  %>
         </div>
     </div>
 
